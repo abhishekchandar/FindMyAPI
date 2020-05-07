@@ -1,4 +1,4 @@
-# base-search-engine-v2
+# FindMyAPI
 
 ## Project setup
 ```
