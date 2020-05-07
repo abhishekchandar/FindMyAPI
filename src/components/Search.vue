@@ -1,40 +1,50 @@
 <template>
-  <div class="hello">
-      <h1>Search</h1>
-      <input v-model="term" type="search"><button @click="search">Search</button>
-      <div v-if="results">
-              <Result v-for="result in results" :key="result.Link" :link="result.Link" :api="result.API" :desc="result.Description" />
-      </div>
-  </div>  
+  <v-app>
+    <h1> Search Page</h1>
+    <v-form
+    ref="form"
+    v-model="valid"
+    lazy-validation
+  >
+    <v-text-field
+    v-model="term"
+    type="search"
+      label="Enter the keyword !"
+    ></v-text-field>
+
+    <v-btn class="mr-5 ml-5" color="success" @click="search">Search</v-btn>
+    <div v-if="results">
+      <Result v-for="result in results" :key="result.Link" :link="result.Link" :api="result.API" :desc="result.Description" />
+    </div>
+
+  </v-form>
+  </v-app>
 </template>
 
 <script>
 import Result from './Result'
-export default {
-  name: 'Search',
-  components: {
-    Result
-  },
-  data() {
-    return {
-      term: '',
-      results:null
-    }
-  },
-  methods: {
-    search() {
-      if (this.term.trim() === '') return;
-      console.log('search for ' +this.term);
-      fetch(`https://api.publicapis.org/entries?title=${encodeURIComponent(this.term)}`)
-        .then(res => res.json())
-        .then(res => {
-          console.log('results',res);
-          this.results = res.entries;
-        })
+  export default {
+    name: 'Search',
+    components: {
+      Result
+    },
+    data() {
+      return {
+        term: '',
+        results:null
+      }
+    },
+    methods: {
+      search() {
+        if(this.term.trim() === '') return;
+        console.log('Searched for ' + this.term);
+        fetch(`https://api.publicapis.org/entries?title=${encodeURIComponent(this.term)}`)
+          .then(res => res.json())
+          .then(res => {
+            console.log('Results', res);
+            this.results = res.entries;
+          })
+      }
     }
   }
-}
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped></style>

@@ -1,4 +1,4 @@
-# app1
+# base-search-engine-v2
 
 ## Project setup
 ```

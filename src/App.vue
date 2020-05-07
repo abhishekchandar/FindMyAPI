@@ -1,24 +1,21 @@
-<template>
-  <div id="app">
-    <Search />
-  </div>
+    <template>
+    <div id="app">
+      <Search />
+    </div>
 </template>
 
 <script>
-import Search from './components/Search.vue'
+import Search from './components/Search';
 
 export default {
   name: 'App',
-  components: {
-    Search
-  }
-}
-</script>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-</style>
+  components: {
+    Search,
+  },
+
+  data: () => ({
+    //
+  }),
+};
+</script>
