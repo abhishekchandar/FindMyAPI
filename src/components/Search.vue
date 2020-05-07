@@ -1,13 +1,38 @@
 <template>
   <div class="hello">
       <h1>Search</h1>
+      <input v-model="term" type="search"><button @click="search">Search</button>
+      <div v-if="results">
+              <Result v-for="result in results" :key="result.Link" :link="result.Link" :api="result.API" :desc="result.Description" />
+      </div>
   </div>  
 </template>
 
 <script>
+import Result from './Result'
 export default {
   name: 'Search',
-  props: { }
+  components: {
+    Result
+  },
+  data() {
+    return {
+      term: '',
+      results:null
+    }
+  },
+  methods: {
+    search() {
+      if (this.term.trim() === '') return;
+      console.log('search for ' +this.term);
+      fetch(`https://api.publicapis.org/entries?title=${encodeURIComponent(this.term)}`)
+        .then(res => res.json())
+        .then(res => {
+          console.log('results',res);
+          this.results = res.entries;
+        })
+    }
+  }
 }
 </script>
 
