@@ -14,24 +14,38 @@
 
     <v-btn class="mr-5 ml-5" color="success" @click="search">Search</v-btn>
     <div v-if="results">
-      <Result v-for="result in results" :key="result.Link" :link="result.Link" :api="result.API" :desc="result.Description" />
+      <Result :results="results"/>
     </div>
-
   </v-form>
-  </v-app>
+  
+</v-app>
 </template>
 
 <script>
 import Result from './Result'
   export default {
     name: 'Search',
+    created() {
+      this.search()
+    },
     components: {
-      Result
+     Result
     },
     data() {
       return {
+
         term: '',
-        results:null
+        results:null,
+        headers: [
+        {
+          text: 'API Name',
+          align: 'left',
+          sortable: false,
+          value: 'name'
+        },
+        { text: 'API link', value: 'link' },
+        { text: 'API Description', value: 'desc' },
+      ]
       }
     },
     methods: {
@@ -48,3 +62,7 @@ import Result from './Result'
     }
   }
 </script>
+
+<style scoped>
+
+</style>
