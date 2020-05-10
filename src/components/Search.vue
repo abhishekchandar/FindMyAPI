@@ -1,25 +1,52 @@
 <template>
   <v-app>
-    <h1> Search Page</h1>
-    <v-form
-    ref="form"
-    v-model="valid"
-    lazy-validation
-  >
-    <v-text-field
-    v-model="term"
-    type="search"
-      label="Enter the keyword !"
-    ></v-text-field>
-
-    <v-btn class="mr-5 ml-5" color="success" @click="search">Search</v-btn>
-    <div v-if="results">
-      <Result :results="results"/>
-    </div>
-  </v-form>
+    <v-flex >
+        <v-toolbar color="cyan" dark>
+          <v-toolbar-side-icon></v-toolbar-side-icon>
+          <v-toolbar-title>FindMyAPI</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon>
+            <v-icon>search</v-icon>
+          </v-btn>
+        </v-toolbar>
+     <v-layout class="py-5 mt-auto">
+      <v-flex xs12 sm6 offset-sm3 >
+        <v-card>
+          <v-card-title primary-title>
+            <div>
+              <h3 class="headline mb-0">Search the API here:</h3>
+              <div> {{ card_text }} </div>
+            </div>
+          </v-card-title>
+        <v-text-field class="py-3 mx-3"
+            label="Enter the keyword"
+            single-line
+            v-model="term"
+            type="search"
+            outlined
+          ></v-text-field>
   
+          <v-card-actions>
+            <v-btn flat color="success" @click="search">Search</v-btn>
+          </v-card-actions>
+          
+          <p>{{ comment }}</p>
+              </v-card>
+      <div v-if="results">
+            <Result :results="results"/>
+              </div>   
+      </v-flex>
+     </v-layout>
+    </v-flex>
+    <v-footer class="pa-3">
+    <v-spacer></v-spacer>
+    <div>&copy; {{ new Date().getFullYear() }}</div>
+  </v-footer>
 </v-app>
 </template>
+
+<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
 
 <script>
 import Result from './Result'
@@ -33,8 +60,6 @@ import Result from './Result'
     },
     data() {
       return {
-
-        term: '',
         results:null,
         headers: [
         {
@@ -50,13 +75,17 @@ import Result from './Result'
     },
     methods: {
       search() {
-        if(this.term.trim() === '') return;
-        console.log('Searched for ' + this.term);
+        if(this.term.trim() === '') {
+          return;
+        }
         fetch(`https://api.publicapis.org/entries?title=${encodeURIComponent(this.term)}`)
           .then(res => res.json())
           .then(res => {
             console.log('Results', res);
             this.results = res.entries;
+          })
+          .catch(function(error) {
+            this.comment = 'Error! Could not reach the API.' + error
           })
       }
     }
