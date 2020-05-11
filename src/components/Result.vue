@@ -1,23 +1,5 @@
 <template>
     <div>
-        <!-- <v-simple-table>
-      <template v-slot:default>
-        <thead>
-          <tr>
-            <th class="text-left">API Name</th>
-            <th class="text-left">API URL</th>
-            <th class="text-left">API Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="result in results" :key="result.Link">
-            <td>{{ result.API }}</td>
-            <td><a :href="`${result.Link}`" target="_new">{{ result.Link }}</a></td>
-            <td>{{result.Description}}</td>
-          </tr>
-        </tbody>
-      </template>
-    </v-simple-table> -->
     <v-card>
       <v-card-title>
         Filter the API here ->

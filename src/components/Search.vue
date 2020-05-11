@@ -24,17 +24,23 @@
             v-model="term"
             type="search"
             outlined
+            value="term"
           ></v-text-field>
   
           <v-card-actions>
             <v-btn flat color="success" @click="search">Search</v-btn>
           </v-card-actions>
           
-          <p>{{ comment }}</p>
               </v-card>
       <div v-if="results">
             <Result :results="results"/>
-              </div>   
+      </div>
+      <div v-else>
+        <v-alert :value="true" color="error" icon="warning">
+          Your search for "{{ term }}" found no results.
+        </v-alert>
+        </div>
+            
       </v-flex>
      </v-layout>
     </v-flex>
@@ -60,6 +66,7 @@ import Result from './Result'
     },
     data() {
       return {
+        term: '',
         results:null,
         headers: [
         {
